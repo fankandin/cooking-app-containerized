@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  admin:
+    build: cooking-app-admin
+    depends_on:
+     - api
+    ports:
+     - "8081:8081"
+    restart: always
+
+  api:
+    build: cooking-app-api
+    depends_on:
+     - db
+    ports:
+     - "8800:8081"
+
+  db:
+    image: mysql
+    ports:
+     - "3306:3306"
+    volumes:
+     - "./.data/db:/var/lib/mysql"
+     - "./mysql.cnf:/etc/mysql/conf.d/my.cnf"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+     - db
+    ports:
+      - "8085:80"
+    environment:
+      PMA_HOST: db

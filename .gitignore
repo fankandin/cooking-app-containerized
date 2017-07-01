@@ -1,0 +1,5 @@
+cooking-app-containerized.iml
+.idea
+
+.data/db/*
+.env
