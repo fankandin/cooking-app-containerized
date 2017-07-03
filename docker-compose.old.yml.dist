@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2'
 
 services:
   admin:
@@ -12,8 +12,7 @@ services:
   api:
     build: cooking-app-api
     depends_on:
-       db:
-         condition: service_started
+     - db
     ports:
      - "8800:8081"
 
