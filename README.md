@@ -1,4 +1,4 @@
-# Cooking App contnainerized 
+# Cooking App containerized 
 
 Cooking App is a microservice based application to serve as a household database of recipes. It consists of the followig components:
  * [API endpoint](https://github.com/fankandin/cooking-app-endpoint) - RESTful API backend. Written on Java.
@@ -69,3 +69,14 @@ Run the following:
 USE cooking;
 UPDATE DATABASECHANGELOGLOCK SET locked=0, lockgranted=null, lockedby=null WHERE id=1;
 ```
+
+## Docker Compose does not recognize the config
+The default _docker-compose.yml_ requires v2.1, which has a very important feature of preventing dependent containers from too early start. The "api" (the Java app) container uses Liquibase to run/validate the database migrations, so it demands the "db" container to be started before.
+
+If you have an older Docker Compose and want to launch the demo it shouldn't be a critical issue for you. In this case you may take the file _docker-compose.old.yml.dist_ (supplied within this repository) and rename it to _docker-compose.yml_. Ready! If you however see that the backend does not work (you may call `docker-compose logs api` to check if the app was launched correctly or just try out if the frontend does not get 404 errors to its XHR requests). If not, then just restart the application (`docker-compose stop`, `docker-compose up -d`) and it will likely catch up everything.
+
+## The backend does not accept non-latin characters (Windows platform)
+The implementation of Docker for Windows platforms (using Docker Tools) is not so stable as on Linux systems. It may happen that Docker Compose does not mount properly the volumes for the "db" containers without any notifications. It results in a container that stores the MySQL data files inside the containers. Although it is not critical for the demo needs, it is a problem for the default settings of the MySQL containers, which is supposed to get the config from the mounted _mysql.cnf_. But if it is not mounted, it is just skipped and MySQL starts with default settings, where the tables are by default have "latin1_swedish_ci" encoding (an extremely weird MySQL's peculiarity). Hopefully we'll fix the problem soon. 
+
+## Authors
+This application is developed by [Alexander Palamarchuk](http://palamarchuk.info/).
