@@ -3,3 +3,4 @@ cooking-app-containerized.iml
 
 .data/db/*
 .env
+cooking-app-api/env.properties
