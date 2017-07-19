@@ -2,7 +2,7 @@
 
 Cooking App is a microservice based application to serve as a household database of recipes. It consists of the followig components:
  * [API endpoint](https://github.com/fankandin/cooking-app-endpoint) - RESTful API backend. Written on Java.
- * [API admin frontend](ttps://github.com/fankandin/cooking-app-admin) - RESTful API frontend for the DB administraition. SPA, written on VueJS.
+ * [API admin frontend](https://github.com/fankandin/cooking-app-admin) - RESTful API frontend for the DB administraition. SPA, written on VueJS.
 
 The database structure is supplied with the "API endpoint" application in form of [Liquibase](http://www.liquibase.org/) migrations.
 
